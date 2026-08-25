@@ -93,7 +93,7 @@ test('Await expected',async({page}) =>{
     await page.locator('#viewport-target').scrollIntoViewIfNeeded();
     await expect(page.locator("#viewport-target")). toBeInViewport();
 
-    await page.pause()
+    // await page.pause()
 
 
 })
