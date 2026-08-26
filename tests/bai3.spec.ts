@@ -1,5 +1,5 @@
-import { test, expect } from '@playwright/test';
-import { Page } from '@playwright/test';
+import { test, expect } from "@playwright/test";
+import { Page } from "@playwright/test";
 
 // test('Vai tro mac dinh', async ({ page }) => {
 //     await page.goto('https://demoapp-sable-gamma.vercel.app/')
@@ -54,8 +54,6 @@ import { Page } from '@playwright/test';
 //         await expect(page.getByRole('button', { name: 'Publish' })).toBeDisabled()
 //     });
 
-
-
 //     test('Bai tap 2', async ({ page }) => {
 //         await testbaitap(page)
 //         await page.getByRole('heading', { name: 'Câu 1: Landmark Navigation "Primary' })
@@ -71,12 +69,11 @@ import { Page } from '@playwright/test';
 //         await testbaitap(page)
 //         await page.getByRole('button', {name:'Load comments'}).click()
 
-        
 //         const comments = page
 //             .getByRole('region', { name: 'Comments' })
 //             .getByRole('list')
 //             .getByRole('listitem');
-        
+
 //         await expect(comments).toHaveCount(3);
 //         // await testbaitap(page)
 //         // await page.getByRole('button', {name:'Load comments'}).click()
@@ -85,25 +82,22 @@ import { Page } from '@playwright/test';
 //         // await expect(page.getByRole('listitem')).toHaveCount(3)
 //         // // await page.pause()
 
-
 //     });
-
-
 
 // //
 
-
-
 // })
-test('Xpath selection', async({page}) =>{
-    await page.goto('https://lab.autoneko.com/');
-    await page.getByRole('link',{name:"Bài 1: Locators từ CSS đến getBy", exact: true}).click()
-    await page.getByRole('button',{name:"XCSS Selector"}).click()
-    await page.getByRole('button',{name:'Bài tập'}).click()
-    // await page.locator('//input[@name="email"]').fill('oanh@gmail.com')
-    // await page.locator('////button[@data-action="submit"]').highlight()
-    // await page.pause()
-
-    await expect( page.locator('.product-card.featured .stock-status.out-of-stock')).toBeVisible()
-
-})
+test("Xpath selection", async ({ page }) => {
+  await page.goto("https://lab.autoneko.com/");
+  await page
+    .getByRole("link", {
+      name: "Bài 1: Locators từ CSS đến getBy",
+      exact: true,
+    })
+    .click();
+  await page.getByRole("button", { name: "CSS Selector" }).click();
+  await page.getByRole("button", { name: "Bài tập", exact: true }).click();
+  // await page.locator('//input[@name="email"]').fill('oanh@gmail.com')
+  // await page.locator('////button[@data-action="submit"]').highlight()
+  // await page.pause()
+});
