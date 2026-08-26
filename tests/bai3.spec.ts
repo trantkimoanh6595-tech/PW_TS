@@ -84,7 +84,13 @@ import { Page } from "@playwright/test";
 
 //     });
 
+
+    })
+
 // //
+
+    //    await page.pause()
+
 
 // })
 test("Xpath selection", async ({ page }) => {
