@@ -6,11 +6,11 @@ import { test, expect } from "@playwright/test";
 // // });
 const TAGET_URL = "https://playwright.dev";
 // test.describe('trang chu playwright.dev',() => {
-test.only("TC01. dEMO Domcontentloaded", async ({ page }) => {
+test("TC01. dEMO Domcontentloaded", async ({ page }) => {
   console.log("DEMO WAIT UNTIL- Domcontentloaded");
-  await page.goto("https://playwright.dev/");
-
-  await expect(page.getByRole("link", { name: "Docs" })).toBeVisible();
+  await page.goto("https://playwright.dev/", {
+    waitUntil: "domcontentloaded",
+  });
 });
 
 //   test('TC02. Check URL cua trang hien thi',async({page}) => {
