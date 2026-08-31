@@ -2,7 +2,7 @@ import { test, expect, Page, Locator, BrowserContext } from "@playwright/test";
 
 test.describe.serial("🚀 Advanced Click Scenarios", () => {
   let page: Page;
-  let context: BrowserContext;
+  let context: BrowserContext | undefined;
   let advanceClickScreanario: Locator;
   async function gotoPage(page: Page) {
     await page.goto("https://lab.autoneko.com/");
@@ -26,7 +26,7 @@ test.describe.serial("🚀 Advanced Click Scenarios", () => {
   });
 
   test.afterAll(async () => {
-    await context.close();
+    await context?.close();
   });
 
   test("TC01 Select 3 Work Files ", async () => {
