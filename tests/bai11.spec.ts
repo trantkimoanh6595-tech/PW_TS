@@ -93,4 +93,100 @@ test.describe.serial("🚀 Advanced Click Scenarios", () => {
     await dialog.getByRole("button", { name: "Đóng" }).click();
     await expect(dialog).toBeHidden();
   });
+  test("TCS06 function button clear all ", async () => {
+    const clearAllButton = advanceClickScreanario.locator("#ac-clear-all");
+    await clearAllButton.click();
+    await expect(
+      advanceClickScreanario.locator("#ac-process-docs"),
+    ).toBeVisible();
+    const dialog = page.getByRole("dialog");
+    await advanceClickScreanario.locator("#ac-process-docs").click();
+    await expect(dialog).toContainText(
+      "✅ Document processing allowed - no media files detected",
+    );
+    await dialog.getByRole("button", { name: "Hủy" }).click();
+    await expect(dialog).toBeHidden();
+  });
+
+  test("TCs07 function button document pdf", async () => {
+    const dowloadButton = advanceClickScreanario.getByRole("button", {
+      name: /Document\.pdf/,
+    });
+    await expect(dowloadButton).toBeVisible();
+    await dowloadButton.click();
+
+    await expect(advanceClickScreanario.locator("#ac-process")).toBeVisible();
+    await expect(advanceClickScreanario.locator("#ac-download")).toHaveText(
+      "Download 1 files",
+    );
+  });
+  test("TCs08- image button", async () => {
+    const imageButton = advanceClickScreanario.getByRole("button", {
+      name: /Image\.jpg/,
+    });
+    await expect(imageButton).toBeVisible();
+    await imageButton.click();
+    await expect(advanceClickScreanario.locator("#ac-download")).toHaveText(
+      "Download 2 files",
+    );
+  });
+  async function Mouseawait(page: Page) {
+    const panel = page.getByRole("tabpanel", { name: "🖱️ Mouse Actions" });
+    const autoWaitSection = panel.locator("#mouse-auto-wait");
+    return {
+      panel,
+      autoWaitSection,
+    };
+  }
+  test("TC09 Demo tự động chờ", async () => {
+    const { autoWaitSection } = await Mouseawait(page);
+    const mouseAdd = autoWaitSection.locator("#mouse-add-dom-trigger");
+    await expect(mouseAdd).toBeVisible();
+
+    await mouseAdd.click();
+    await expect(page.locator("#test-button-1")).toHaveText(
+      "Click Tôi! (Đã có trong DOM)",
+    );
+    await page.locator("#test-button-1").click();
+    await expect(page.locator("#test-button-1")).toBeHidden();
+  });
+  test("TC11 Chờ phần tử được hiển thị", async () => {
+    const { autoWaitSection } = await Mouseawait(page);
+    const mouseDisplay = autoWaitSection.locator("#mouse-display-trigger");
+    await mouseDisplay.click();
+    await expect(autoWaitSection.locator("#test-button-2")).toHaveText(
+      "Click Tôi! (Đã hiển thị)",
+    );
+    await autoWaitSection.locator("#test-button-2").click();
+    //   await expect(autoWaitSection.locator("#test-button-2")).toBeHidden();
+  });
+
+  test("TC12 Chờ target ổn định", async () => {
+    const { autoWaitSection } = await Mouseawait(page);
+    const anmationButton = autoWaitSection.locator(
+      "#mouse-start-animation-trigger",
+    );
+    const testButton3 = autoWaitSection.locator("#test-button-3");
+    await anmationButton.click();
+    // await page.pause();
+    await testButton3.click();
+    await expect(
+      autoWaitSection.locator("#mouse-autowait-result"),
+    ).toContainText("Hoàn tất Test 3");
+  });
+  test("TCs13 Cuộn phần tử", async () => {
+    const { autoWaitSection } = await Mouseawait(page);
+    const displayButton = autoWaitSection.locator(
+      "#mouse-toggle-viewport-trigger",
+    );
+    const clickMe = autoWaitSection.locator("#test-button-4");
+    await displayButton.click();
+    await expect(displayButton).toHaveText("Ẩn Button");
+    await expect(clickMe).toBeVisible();
+    await clickMe.click();
+    await expect(clickMe).toBeHidden();
+    await expect(
+      autoWaitSection.locator("#mouse-autowait-result"),
+    ).toContainText("Hoàn tất Test 4:");
+  });
 });
