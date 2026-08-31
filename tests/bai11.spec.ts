@@ -189,4 +189,43 @@ test.describe.serial("🚀 Advanced Click Scenarios", () => {
       autoWaitSection.locator("#mouse-autowait-result"),
     ).toContainText("Hoàn tất Test 4:");
   });
+  async function mouseFore(page: Page) {
+    const panelmouseForec = page.locator("#mouse-force-click");
+    const mouseOverLay = panelmouseForec.getByTestId(
+      "mouse-force-target-normal-card",
+    );
+    const mouseForceClick = panelmouseForec.getByTestId(
+      "mouse-force-target-force-card",
+    );
+
+    return {
+      panelmouseForec,
+      mouseOverLay,
+      mouseForceClick,
+    };
+  }
+  test("TCs14-over lay", async () => {
+    const { mouseOverLay } = await mouseFore(page);
+    const mouseDeleteOVerlay = mouseOverLay.locator(
+      "#mouse-remove-overlay-trigger",
+    );
+    const normalButton = mouseOverLay.locator("#normal-button");
+    await mouseDeleteOVerlay.click();
+    await expect(normalButton).toBeVisible();
+    await normalButton.click();
+    await expect(mouseOverLay.locator("#mouse-normal-click-count")).toHaveText(
+      "Số Lần Click Thường: 1",
+    );
+  });
+  test("TCs15-mouse force click", async () => {
+    const { mouseForceClick } = await mouseFore(page);
+    const closeOverLay = mouseForceClick.locator("#mouse-toggle-force-overlay");
+    const forceButton = mouseForceClick.locator("#force-button");
+    await closeOverLay.click();
+    await expect(forceButton).toBeVisible();
+    await forceButton.click({ force: true });
+    await expect(
+      mouseForceClick.locator("#mouse-force-click-count"),
+    ).toHaveText("Số Lần Force Click: 1");
+  });
 });
