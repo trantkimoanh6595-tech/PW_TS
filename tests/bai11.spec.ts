@@ -197,11 +197,13 @@ test.describe.serial("🚀 Advanced Click Scenarios", () => {
     const mouseForceClick = panelmouseForec.getByTestId(
       "mouse-force-target-force-card",
     );
+    const clickElement = panelmouseForec.locator("#mouse-element-vs-fake");
 
     return {
       panelmouseForec,
       mouseOverLay,
       mouseForceClick,
+      clickElement,
     };
   }
   test("TCs14-over lay", async () => {
@@ -223,9 +225,37 @@ test.describe.serial("🚀 Advanced Click Scenarios", () => {
     const forceButton = mouseForceClick.locator("#force-button");
     await closeOverLay.click();
     await expect(forceButton).toBeVisible();
-    await forceButton.click({ force: true });
+    await forceButton.click();
     await expect(
       mouseForceClick.locator("#mouse-force-click-count"),
     ).toHaveText("Số Lần Force Click: 1");
+  });
+  test("TC16 click element thật giả", async () => {
+    const panel = page.getByRole("tabpanel", { name: "🖱️ Mouse Actions" });
+    const clickElement = panel.locator("#mouse-element-vs-fake");
+    const turnButton = clickElement.locator("#mouse-toggle-disabled");
+    const realButton = clickElement.locator("#mouse-real-button");
+    const fakeButton = clickElement.locator("#mouse-fake-span");
+    await turnButton.click();
+    await expect(realButton).toBeDisabled();
+    await fakeButton.click();
+    await expect(clickElement.locator("#mouse-fake-span-count")).toContainText(
+      "1",
+    );
+    await expect(
+      clickElement.locator("#mouse-real-button-count"),
+    ).toContainText("0");
+  });
+  test("TC16 click on div", async () => {
+    const panel = page.getByRole("tabpanel", { name: "🖱️ Mouse Actions" });
+    const clickElement = panel.locator("#mouse-element-vs-fake");
+    const divButton = clickElement.locator("#mouse-custom-div");
+    await divButton.click();
+    (await expect(
+      clickElement.locator("#mouse-custom-div-count"),
+    ).toContainText("1"),
+      await expect(
+        clickElement.locator("#mouse-custom-span-count"),
+      ).toContainText("0"));
   });
 });
